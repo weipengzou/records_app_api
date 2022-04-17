@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { Public } from 'src/common/decorator/jwt.decorator';
+import { Public } from '../../common/decorator/jwt.decorator';
 import { LoginUserDto } from '../user/dto/login-user.dto';
 import { AuthService } from './auth.service';
 
