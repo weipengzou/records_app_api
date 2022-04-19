@@ -24,9 +24,9 @@ export class Record {
   @Column()
   like: number;
 
-  @CreateDateColumn()
-  create_time: Timestamp;
+  @CreateDateColumn({ type: 'timestamp' })
+  create_time: () => Timestamp;
 
-  @UpdateDateColumn()
-  update_time: Timestamp;
+  @UpdateDateColumn({ type: 'timestamp' })
+  update_time: () => Timestamp;
 }

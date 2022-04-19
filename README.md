@@ -32,6 +32,21 @@
 $ npm install
 ```
 
+## typeorm
+
+Running migrations with typeorm
+
+```
+$ npm install -g ts-node
+$ ts-node node_modules/.bin/typeorm migration:run
+```
+
+or
+
+```
+$ node_modules/.bin/typeorm migration:run
+```
+
 ## Running the app
 
 ```bash

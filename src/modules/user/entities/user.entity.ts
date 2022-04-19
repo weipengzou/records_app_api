@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import { hashSync } from 'bcrypt';
 import { Record } from 'src/modules/records/entities/record.entity';
-
 @Entity('user')
 export class User {
   @PrimaryGeneratedColumn()
@@ -42,9 +41,9 @@ export class User {
   @OneToMany(() => Record, (record) => record.uid)
   records: Record[];
 
-  @CreateDateColumn()
-  create_time: Timestamp;
+  @CreateDateColumn({ type: 'timestamp' })
+  create_time: () => Timestamp;
 
-  @UpdateDateColumn()
-  update_time: Timestamp;
+  @UpdateDateColumn({ type: 'timestamp' })
+  update_time: () => Timestamp;
 }
