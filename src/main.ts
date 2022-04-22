@@ -12,7 +12,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor()); // 全局返回拦截
   // swagger
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('/doc', app, document);
+  app.enableCors(); // 开启跨域
   await app.listen(process.env.SERVER_PORT);
   // log
   console.log('------------------------------------');
