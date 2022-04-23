@@ -54,7 +54,7 @@ export class UserController {
   @Post('/update')
   update(@Body() updateUserDto: UpdateUserDto, @Req() req) {
     if (req.user.id !== updateUserDto.id) return '修改权限错误';
-    return this.userService.update(+updateUserDto.id, updateUserDto);
+    return this.userService.update(updateUserDto);
   }
 
   @Delete(':id')

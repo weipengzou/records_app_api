@@ -1,3 +1,4 @@
+import { ValidationPipe } from './common/pipe/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -14,6 +15,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('/doc', app, document);
   app.enableCors(); // 开启跨域
+  app.useGlobalPipes(new ValidationPipe()); // 验证参数通道
   await app.listen(process.env.SERVER_PORT);
   // log
   console.log('------------------------------------');

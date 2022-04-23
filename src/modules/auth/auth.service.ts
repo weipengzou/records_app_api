@@ -14,7 +14,7 @@ export class AuthService {
   async login(user: LoginUserDto) {
     let userInfo: User;
     try {
-      userInfo = (await this.userService.login(user))[0];
+      userInfo = await this.userService.login(user);
     } catch (error) {
       return error;
     }

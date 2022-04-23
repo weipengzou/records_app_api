@@ -27,7 +27,7 @@ export class UserService {
     if (!compareSync(loginUserDto.password, res.password))
       return Promise.reject(new NotFoundException('账号/密码错误'));
 
-    const userInfo = await this.usersRepository.find({
+    const userInfo = await this.usersRepository.findOne({
       where: { account: loginUserDto.account },
     });
     return userInfo;
@@ -56,8 +56,14 @@ export class UserService {
     return this.usersRepository.findOne(id);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return await this.usersRepository.update(id, updateUserDto);
+  async update(updateUserDto: UpdateUserDto) {
+    return await this.usersRepository.update(updateUserDto.id, {
+      account: updateUserDto.account,
+      avatar: updateUserDto.avatar,
+      email: updateUserDto.email,
+      phone: updateUserDto.phone,
+      display_name: updateUserDto.displayName,
+    });
   }
 
   async remove(id: number) {
