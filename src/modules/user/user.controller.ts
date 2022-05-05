@@ -16,9 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  /**
-   * Create some resource
-   */
+
   @Public()
   @Post('register')
   create(@Body() createUserDto: CreateUserDto) {
@@ -48,17 +46,16 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(id);
   }
 
   @Post('/update')
   update(@Body() updateUserDto: UpdateUserDto, @Req() req) {
-    if (req.user.id !== updateUserDto.id) return '修改权限错误';
-    return this.userService.update(updateUserDto);
+    return this.userService.update(req.user.id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.remove(id);
   }
 }

@@ -4,46 +4,49 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { hashSync } from 'bcrypt';
 import { Record } from 'src/modules/records/entities/record.entity';
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({ type: 'varchar', default: '' })
+  @Column({ default: '', comment: '头像' })
   avatar: string;
 
-  @Column({ type: 'varchar', default: '' })
+  @Column({ default: '', comment: '昵称' })
   display_name: string;
 
-  @Column({ type: 'varchar', default: '' })
+  @Column({ default: '', comment: '邮箱' })
   email: string;
 
-  @Column({ type: 'varchar', default: '' })
+  @Column({ default: '', comment: '手机' })
   phone: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ nullable: false, comment: '账号' })
   account: string;
 
   @Column({
+    nullable: false,
     select: false,
     transformer: {
       to: (val) => (val ? hashSync(val, 10) : val),
       from: (val) => val,
     },
+    comment: '密码',
   })
   password: string;
 
-  @OneToMany(() => Record, (record) => record.uid)
+  @OneToMany(() => Record, (record) => record.user, {
+    cascade: true,
+  })
   records: Record[];
 
-  @CreateDateColumn({ type: 'timestamp' })
-  create_time: () => Timestamp;
+  @CreateDateColumn()
+  create_time: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  update_time: () => Timestamp;
+  @UpdateDateColumn()
+  update_time: Date;
 }

@@ -7,7 +7,8 @@ export const getDataBaseCongfig = (): TypeOrmModuleOptions => ({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: 'records',
-  entities: ['dist/**/*.entity.js'],
+  // entities: ['dist/**/*.entity.js'],
   autoLoadEntities: true,
   keepConnectionAlive: true,
+  synchronize: true,
 });

@@ -1,6 +1,4 @@
 export class UpdateUserDto {
-  id: number;
-
   avatar: string;
 
   displayName: string;

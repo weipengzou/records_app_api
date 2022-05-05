@@ -40,9 +40,12 @@ export class UserService {
   }
 
   async register(createUserDto: CreateUserDto) {
+    console.log('user register');
     const res = await this.usersRepository.findOne({
       where: { account: createUserDto.account },
     });
+    console.log(res);
+
     if (res) return Promise.reject(new BadRequestException('账号已存在'));
     const userInfo = await this.usersRepository.create(createUserDto);
     return this.usersRepository.save(userInfo);
@@ -52,12 +55,12 @@ export class UserService {
     return this.usersRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.usersRepository.findOne(id);
   }
 
-  async update(updateUserDto: UpdateUserDto) {
-    return await this.usersRepository.update(updateUserDto.id, {
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return await this.usersRepository.update(id, {
       account: updateUserDto.account,
       avatar: updateUserDto.avatar,
       email: updateUserDto.email,
@@ -66,7 +69,7 @@ export class UserService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.usersRepository.delete(id);
   }
 }

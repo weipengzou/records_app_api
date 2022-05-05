@@ -1,9 +1,11 @@
+import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -12,21 +14,22 @@ export class Record {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  uid: number;
+  @ManyToOne(() => User, (user) => user.records)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
-  @Column({ nullable: true })
+  @Column()
   title: string;
 
   @Column()
   content: string;
 
-  @Column()
+  @Column({ default: 0 })
   like: number;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  create_time: () => Timestamp;
+  @CreateDateColumn()
+  create_time: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  update_time: () => Timestamp;
+  @UpdateDateColumn()
+  update_time: Date;
 }
