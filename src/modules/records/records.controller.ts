@@ -13,6 +13,7 @@ import { RecordsService } from './records.service';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { UpdateRecordDto } from './dto/update-record.dto';
 import { Public } from '@/common/decorator/jwt.decorator';
+import { IPageQuery } from '@/utils/pageQuery';
 
 @Controller('records')
 export class RecordsController {
@@ -23,23 +24,15 @@ export class RecordsController {
     return this.recordsService.create(req.user.id, createRecordDto);
   }
 
-  @Get()
-  async findAll(@Req() req) {
-    return this.recordsService.findAll();
-  }
+  // @Get()
+  // async findAll(@Req() req) {
+  //   return this.recordsService.findAll();
+  // }
+
   @Public()
   @Post('pageFind')
-  findByUser(
-    @Body('userId') userId: string,
-    @Body('pageSize', new DefaultValuePipe(10)) pageSize: number,
-    @Body('pageNumebr', new DefaultValuePipe(1)) pageNumebr: number,
-  ) {
-    console.log('records pageFind');
-    return this.recordsService.findByUser({
-      userId,
-      pageNumebr,
-      pageSize,
-    });
+  findByUser(@Body() body: IPageQuery<{ userId: string }>) {
+    return this.recordsService.findByUser(body);
   }
 
   @Patch(':id')

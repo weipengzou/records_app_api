@@ -5,7 +5,7 @@ import { UpdateRecordDto } from './dto/update-record.dto';
 import { Record } from './entities/record.entity';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
-import { IpageQuery } from 'src/interfcace';
+import { IPageQuery, PageQuery } from '@/utils/pageQuery';
 
 @Injectable()
 export class RecordsService {
@@ -25,15 +25,15 @@ export class RecordsService {
     return this.recordsRepository.save(records);
   }
 
-  async findAll() {
-    return await this.recordsRepository.find();
-  }
+  // async findAll() {
+  //   return await this.recordsRepository.find();
+  // }
 
-  async findByUser(params: IpageQuery<{ userId?: string }>) {
+  async findByUser(params: IPageQuery<{ userId?: string }>) {
     let user;
     if (params?.userId) user = await this.userRepository.findOne(params.userId);
-    const { pageNumebr, pageSize } = params;
-    const { take, skip } = new PageQuery({ pageNumebr, pageSize });
+    const { pageNumber, pageSize } = params;
+    const { take, skip } = new PageQuery({ pageNumber, pageSize });
 
     return await this.recordsRepository.find({
       order: {

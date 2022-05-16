@@ -1,10 +1,19 @@
-class PageQuery {
+export class PageQuery {
   skip: number;
   take: number;
-  constructor({ pageSize, pageNumebr }) {
-    pageSize ??= 10;
-    pageNumebr ??= 1;
-    this.skip = pageSize * (pageNumebr - 1);
+  constructor({
+    pageSize = 10,
+    pageNumber = 1,
+  }: {
+    pageSize: number;
+    pageNumber: number;
+  }) {
+    this.skip = pageSize * (pageNumber - 1);
     this.take = pageSize;
   }
+}
+export type IPageQuery<T> = T & PageQueryOptions;
+class PageQueryOptions {
+  pageSize: number;
+  pageNumber: number;
 }
